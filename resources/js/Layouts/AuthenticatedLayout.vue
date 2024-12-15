@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Package2, Search, UsersRound} from 'lucide-vue-next'
+import {Package2, Search, UsersRound, LayoutDashboard} from 'lucide-vue-next'
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 import NavLink from "@/Components/NavLink.vue";
 import UserToggle from "@/Components/UserToggle.vue";
@@ -40,6 +40,13 @@ const APP_NAME = import.meta.env.VITE_APP_NAME
                 </div>
                 <div class="flex-1">
                     <nav class="grid items-start text-sm font-medium">
+                        <NavLink
+                            :href="route('dashboard')"
+                            :active="route().current('dashboard')"
+                        >
+                            <LayoutDashboard />
+                            Dashboard
+                        </NavLink>
                         <NavLink
                             :href="route('clients.index')"
                             :active="route().current('clients.index')"

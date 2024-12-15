@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -89,10 +90,8 @@ class ClientController extends Controller
     public function search(Request $request)
     {
         try {
-            // Perform the search
             $search_result = Client::search($request->keyword)->get();
 
-            // Check if the result is empty
             if ($search_result->isEmpty()) {
                 \Log::info('No results found for keyword: ' . $request->keyword);
             } else {
@@ -108,5 +107,49 @@ class ClientController extends Controller
                 'error' => 'Search failed, please try again later.'
             ], 500);
         }
+    }
+
+    public function stats()
+    {
+        $today = Carbon::today();
+        $clientsToday = Client::whereDate('created_at', $today)->get(['name', 'created_at']);
+        $count = $clientsToday->count();
+
+        $last7Days = collect();
+        $dailyClients = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = $today->copy()->subDays($i);
+            $clientsCount = Client::whereDate('created_at', $date)->count();
+            $last7Days->push([
+                'date' => $date->format('Y-m-d'),
+                'count' => $clientsCount,
+            ]);
+            $dailyClients[] = $clientsCount;
+        }
+
+        $totalClients = Client::count();
+        $thisMonthClients = Client::whereMonth('created_at', $today->month)
+            ->whereYear('created_at', $today->year)
+            ->count();
+
+        $monthlyClients = [];
+        foreach (range(1, 12) as $month) {
+            $monthlyClients[] = [
+                'name' => Carbon::create()->month($month)->format('M'),
+                'total' => Client::whereMonth('created_at', $month)
+                    ->whereYear('created_at', $today->year)
+                    ->count()
+            ];
+        }
+
+        return response()->json([
+            'clients_today' => $count,
+            'client_names' => $clientsToday->pluck('name'),
+            'last_7_days' => $last7Days,
+            'daily_clients' => $dailyClients,
+            'total_clients' => $totalClients,
+            'this_month_clients' => $thisMonthClients,
+            'monthly_clients' => $monthlyClients,
+        ]);
     }
 }
