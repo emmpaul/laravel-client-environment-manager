@@ -22,10 +22,10 @@ class ClientController extends Controller
 
         $totalClients = $query->count();
 
-        $clients = $query->orderBy('name', 'asc')->paginate(16);
+        $clients = $query->orderBy('name')->paginate(16);
 
         return Inertia('Clients/Index', [
-            'clients' => Inertia::defer(fn () => $clients),
+            'clients' => $clients,
             'total_clients' => $totalClients,
         ]);
     }

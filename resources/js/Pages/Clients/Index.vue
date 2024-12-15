@@ -26,9 +26,10 @@
 
             <Pagination
                 :total="clients.total"
-                :sibling-count="1"
-                :show-edges="true"
                 :default-page="clients.current_page"
+                :items-per-page="clients.per_page"
+                :sibling-count="2"
+                show-edges
                 class="mx-auto">
                 <PaginationList v-slot="{ items }" class="flex items-center gap-1">
                     <PaginationPrev
@@ -43,7 +44,7 @@
                             :value="item.value"
                             as-child>
                             <Button
-                                class="w-10 h-10 p-0"
+                                :class="{'bg-primary text-white': item.value === paginationMeta.current_page, 'w-10 h-10 p-0': true}"
                                 variant="outline"
                                 @click="goToPage(item.value)">
                                 {{ item.value }}
