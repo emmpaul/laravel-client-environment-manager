@@ -45,7 +45,7 @@
         </div>
 
         <div v-if="!loading && !informations.length && searchQuery">
-            <p>No information found for "{{ searchQuery }}"</p>
+            <p>No informations found for "{{ searchQuery }}"</p>
         </div>
 
         <!-- No query message -->

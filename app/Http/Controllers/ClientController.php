@@ -12,17 +12,22 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::all()->load('informations');
+        $query = Client::with('informations');
+
+        if ($request->has('keyword') && $request->keyword) {
+            $query->where('name', 'like', '%' . $request->keyword . '%');
+        }
+
+        $totalClients = $query->count();
+
+        $clients = $query->orderBy('name', 'asc')->paginate(16);
 
         return Inertia('Clients/Index', [
-            'clients' => $clients
+            'clients' => Inertia::defer(fn () => $clients),
+            'total_clients' => $totalClients,
         ]);
-
-//        return Inertia('Clients/Index', [
-//            'clients' => Inertia::defer(fn () => $clients),
-//        ]);
     }
 
     /**
