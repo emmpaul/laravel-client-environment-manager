@@ -1,42 +1,41 @@
 <template>
     <AuthenticatedLayout>
-        <Head title="Dashboard" />
+        <Head title="Dashboard"/>
 
         <template #header>
-            <span class="text-2xl flex items-center gap-4">
+            <span class="text-2xl flex items-center">
                 Dashboard
             </span>
         </template>
 
-        <Grid :cols="2">
-            <div>
-                <span class="text-2xl flex items-center gap-4">
-                    Clients added this year
-                </span>
-                <BarChart :data="monthlyClients" :categories="['total']" :index="'name'" :rounded-corners="0" />
-            </div>
-        </Grid>
-
+        <div>
+            <span class="text-2xl flex items-center">
+                Clients added this year
+            </span>
+            <LineChart :data="monthlyClients" :categories="['total']" :index="'name'" :rounded-corners="0"/>
+        </div>
     </AuthenticatedLayout>
 </template>
 
 <script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head} from "@inertiajs/vue3";
-import {BarChart} from '@/Components/ui/chart-bar';
-import Grid from "@/Components/Grid.vue"
+import {LineChart} from '@/Components/ui/chart-line';
 
 export default {
     name: 'Overview',
     components: {
-        BarChart,
         AuthenticatedLayout,
         Head,
-        Grid
+        LineChart
     },
     data() {
         return {
             monthlyClients: [],
+            clientsTodayData: [{name: 'Today', total: 0}],
+            last7DaysClients: [],
+            totalClientsData: [{name: 'Total Clients', total: 0}],
+            thisMonthClientsData: [{name: 'This Month', total: 0}],
         };
     },
     mounted() {
@@ -47,6 +46,10 @@ export default {
             try {
                 const response = await axios.get('/stats');
                 this.monthlyClients = response.data.monthly_clients;
+                this.clientsTodayData = [{name: 'Today', total: response.data.clients_today}];
+                this.last7DaysClients = response.data.last_7_days;
+                this.totalClientsData = [{name: 'Total Clients', total: response.data.total_clients}];
+                this.thisMonthClientsData = [{name: 'This Month', total: response.data.this_month_clients}];
             } catch (error) {
                 console.error('Error fetching stats:', error);
             }
