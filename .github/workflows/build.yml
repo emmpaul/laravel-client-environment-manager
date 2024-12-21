@@ -44,7 +44,7 @@ jobs:
       # Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t dash-clients:latest .
+          docker compose build -t dash-clients:latest .
 
       # Push the Docker image to DockerHub
       - name: Push Docker image
