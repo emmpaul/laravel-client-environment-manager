@@ -1,18 +1,20 @@
 services:
-  dash:
-    image: 'emmpaul/laravel-clients:latest'
+  app:
+    image: emmpaul/laravel-clients:latest
+    container_name: app
     ports:
-      - '80:80'
+      - "${APP_PORT:-80}:8080"
     volumes:
       - '.env:/var/www/html/.env'
-      - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf'
     environment:
-      SERVER_NAME: 'localhost'
+      PHP_POOL_NAME: "laravel-clients_php"
+      SSL_MODE: "off"
     networks:
       - sail
     depends_on:
       - mysql
       - meilisearch
+
   mysql:
     image: 'mysql/mysql-server:8.0'
     ports:

@@ -16,6 +16,4 @@ RUN npm run build
 
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-#CMD nginx -g "daemon off;" & php-fpm -F
-
 USER www-data
