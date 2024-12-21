@@ -1,5 +1,5 @@
 <template>
-    <AuthenticatedLayout>
+    <MainLayout>
         <Head title="Clients" />
 
         <template #header>
@@ -9,7 +9,13 @@
                     {{ total_clients }}
                 </Badge>
             </span>
-            <AddClientDialog />
+            <AddClientDialog v-if="$page.props.auth.user" />
+        </template>
+
+        <template #bottom v-if="!$page.props.auth.user">
+            <div class="flex justify-center items-center text-2xl">
+                To make modifications to this app, you need to be logged in.
+            </div>
         </template>
 
         <Deferred data="clients">
@@ -64,11 +70,11 @@
                 </PaginationList>
             </Pagination>
         </Deferred>
-    </AuthenticatedLayout>
+    </MainLayout>
 </template>
 
 <script>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
+import MainLayout from "@/Layouts/MainLayout.vue"
 import AddClientDialog from "@/Pages/Clients/components/AddClientDialog.vue"
 import ClientCard from "@/Pages/Clients/components/ClientCard.vue"
 import { UserRoundPlus } from "lucide-vue-next"
@@ -94,13 +100,13 @@ export default {
     name: 'ClientsIndex',
 
     components: {
+        MainLayout,
         Button,
         TextInput,
         InputLabel,
         Grid,
         Badge,
         AddClientDialog,
-        AuthenticatedLayout,
         UserRoundPlus,
         Head,
         ClientCard,
