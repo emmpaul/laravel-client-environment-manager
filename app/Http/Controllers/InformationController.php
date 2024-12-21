@@ -103,6 +103,6 @@ class InformationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Information::destroy($id);
     }
 }

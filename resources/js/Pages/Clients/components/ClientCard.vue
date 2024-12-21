@@ -63,7 +63,39 @@
                                             {{ information.environment }}
                                         </Badge>
 
-                                        <EditClientInfoDialog :client="client" :information-id="information.id" />
+                                        <div class="flex items-center gap-2">
+                                            <EditClientInfoDialog :client="client" :information-id="information.id" />
+                                            <AlertDialog>
+                                                <AlertDialogTrigger class="flex justify-center items-center" as="button">
+                                                    <TooltipProvider :delay-duration="300">
+                                                        <Tooltip>
+                                                            <TooltipTrigger>
+                                                                <BadgeX class="hover:text-red-500" />
+                                                            </TooltipTrigger>
+                                                            <TooltipContent class="bg-red-500">
+                                                                Delete {{ information.url }}
+                                                            </TooltipContent>
+                                                        </Tooltip>
+                                                    </TooltipProvider>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>
+                                                            Are you sure you want to delete {{ information.url }} ?
+                                                        </AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This action cannot be undone.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction @click="deleteInformation(information.id)">
+                                                            Delete {{ information.url }}
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </div>
                                     </CardTitle>
                                     <CardDescription>{{ information.server }}</CardDescription>
                                     <Button class="w-full" variant="outline">
@@ -172,14 +204,9 @@ export default {
         deleteClient(id) {
             router.delete(`/clients/${id}`)
         },
-
-        // submit(form) {
-        //     form.patch(route('informations.update'), {
-        //         onSuccess: () => {
-        //             this.$refs.dialogRef.close();
-        //         }
-        //     })
-        // }
+        deleteInformation(id) {
+            router.delete(`/informations/${id}`)
+        }
     }
 }
 </script>
