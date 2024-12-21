@@ -18,8 +18,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Badge} from "@/Components/ui/badge/index.js";
 import {Head, router} from "@inertiajs/vue3";
 import {MoveLeft} from "lucide-vue-next"
-import AddClientInfoDialog from "@/Components/AddClientInfoDialog.vue";
-import ClientInformationsCard from "@/Pages/Clients/ClientInformationsCard.vue";
+import AddClientInfoDialog from "@/Pages/Clients/components/AddClientInfoDialog.vue";
+import ClientInformationsCard from "@/Pages/Clients/components/ClientInformationsCard.vue";
 
 export default {
     name: 'Show',

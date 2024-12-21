@@ -69,8 +69,8 @@
 
 <script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
-import AddClientDialog from "@/Components/AddClientDialog.vue"
-import ClientCard from "@/Pages/Clients/ClientCard.vue"
+import AddClientDialog from "@/Pages/Clients/components/AddClientDialog.vue"
+import ClientCard from "@/Pages/Clients/components/ClientCard.vue"
 import { UserRoundPlus } from "lucide-vue-next"
 import { Head, Deferred } from "@inertiajs/vue3"
 import { Badge } from "@/Components/ui/badge/index.js"

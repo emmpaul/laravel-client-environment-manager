@@ -102,7 +102,7 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger
-} from '@/Components/ui/tooltip'
+} from '@/Components/ui/tooltip/index.js'
 
 export default {
     name: 'AddClientInfoDialog',

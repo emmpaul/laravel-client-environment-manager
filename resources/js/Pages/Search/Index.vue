@@ -58,8 +58,8 @@
 
 <script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import ClientCard from "@/Pages/Clients/ClientCard.vue";
-import ClientInformationsCard from "@/Pages/Clients/ClientInformationsCard.vue";
+import ClientCard from "@/Pages/Clients/components/ClientCard.vue";
+import ClientInformationsCard from "@/Pages/Clients/components/ClientInformationsCard.vue";
 import { Head } from "@inertiajs/vue3";
 import Grid from "@/Components/Grid.vue";
 import TextInput from "@/Components/TextInput.vue";

@@ -62,14 +62,14 @@
 
 <script>
 import {timeAgo} from '@/lib/utils.js'
-import { Button } from '@/Components/ui/button'
+import { Button } from '@/Components/ui/button/index.js'
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from '@/Components/ui/card'
+} from '@/Components/ui/card/index.js'
 import {
     Delete,
     BadgeX
@@ -84,19 +84,19 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from '@/Components/ui/alert-dialog'
+} from '@/Components/ui/alert-dialog/index.js'
 import {
     Separator
-} from "@/Components/ui/separator";
+} from "@/Components/ui/separator/index.js";
 import {router} from "@inertiajs/vue3";
-import AddClientInfoDialog from "@/Components/AddClientInfoDialog.vue";
-import EditClientDialog from "@/Components/EditClientDialog.vue";
+import AddClientInfoDialog from "@/Pages/Clients/components/AddClientInfoDialog.vue";
+import EditClientDialog from "@/Pages/Clients/components/EditClientDialog.vue";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger
-} from '@/Components/ui/tooltip'
+} from '@/Components/ui/tooltip/index.js'
 export default {
     name: 'ClientCard',
 

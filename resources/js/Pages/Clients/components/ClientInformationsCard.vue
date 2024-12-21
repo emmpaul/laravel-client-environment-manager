@@ -24,8 +24,8 @@
 
 <script>
 import {timeAgo} from "@/lib/utils.js";
-import {Button} from '@/Components/ui/button'
-import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from '@/Components/ui/card'
+import {Button} from '@/Components/ui/button/index.js'
+import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from '@/Components/ui/card/index.js'
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -34,8 +34,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/Components/ui/dropdown-menu'
-import {Separator} from '@/Components/ui/separator'
+} from '@/Components/ui/dropdown-menu/index.js'
+import {Separator} from '@/Components/ui/separator/index.js'
 
 export default {
     name: 'ClientInformationsCard',
