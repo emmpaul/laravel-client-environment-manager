@@ -9,29 +9,27 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect('/dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Publicly accessible routes
+Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
+Route::resource('clients', ClientController::class)->only(['index', 'show']);
+Route::get('/stats', [ClientController::class, 'stats'])->name('stats');
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::post('/search', [SearchController::class, 'search'])->name('search');
 
+// Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('clients', ClientController::class);
+
+    // Full resource for authenticated users
+    Route::resource('clients', ClientController::class)->except(['index', 'show']);
+
     Route::post('/clients/search', [ClientController::class, 'search'])->name('clients.search');
     Route::resource('informations', InformationController::class)->only('store', 'destroy', 'update');
-    Route::get('/search', [SearchController::class, 'index'])->name('search.index');
-    Route::post('/search', [SearchController::class, 'search'])->name('search');
-    Route::get('/stats', [ClientController::class, 'stats'])->name('stats');
-
 });
 
 require __DIR__.'/auth.php';

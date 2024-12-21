@@ -1,7 +1,7 @@
 <template>
-    <Head title="Clients"/>
+    <MainLayout>
+        <Head title="Clients"/>
 
-    <AuthenticatedLayout>
         <template #header>
             <span class="text-2xl flex items-center gap-4">
                 Search
@@ -35,12 +35,11 @@
         <div v-if="!loading && !searchQuery && !clients.length && !informations.length">
             <p>Start typing to search for clients or informations.</p>
         </div>
-
-    </AuthenticatedLayout>
+    </MainLayout>
 </template>
 
 <script>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import MainLayout from "@/Layouts/MainLayout.vue";
 import ClientCard from "@/Pages/Clients/components/ClientCard.vue";
 import { Head } from "@inertiajs/vue3";
 import Grid from "@/Components/Grid.vue";
@@ -54,7 +53,7 @@ export default {
     components: {
         TextInput,
         Grid,
-        AuthenticatedLayout,
+        MainLayout,
         ClientCard,
         BounceLoader,
         Head

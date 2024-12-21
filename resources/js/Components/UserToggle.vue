@@ -1,5 +1,5 @@
 <template>
-    <div class="relative ms-3">
+    <div class="relative">
         <Dropdown align="right" width="48">
             <template #trigger>
                 <span class="inline-flex rounded-md">

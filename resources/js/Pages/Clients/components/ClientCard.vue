@@ -14,7 +14,7 @@
                 </Tooltip>
             </TooltipProvider>
 <!--            Actions-->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2" v-if="$page.props.auth.user">
                 <AddClientInfoDialog :client="client" />
                 <EditClientDialog :client="client" />
                 <AlertDialog>
@@ -63,7 +63,7 @@
                                             {{ information.environment }}
                                         </Badge>
 
-                                        <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-2" v-if="$page.props.auth.user">
                                             <EditClientInfoDialog :client="client" :information-id="information.id" />
                                             <AlertDialog>
                                                 <AlertDialogTrigger class="flex justify-center items-center" as="button">
