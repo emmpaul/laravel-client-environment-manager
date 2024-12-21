@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     npm \
+    nginx \
     && docker-php-ext-install zip pdo_mysql
 
 # Install Composer
@@ -30,8 +31,11 @@ RUN npm install && npm run build
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 9000
-EXPOSE 9000
+# Copy custom Nginx config (it will be overridden by docker-compose.yml)
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Start the PHP-FPM service
-CMD ["php-fpm"]
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Start Nginx and PHP-FPM
+CMD service nginx start && php-fpm
