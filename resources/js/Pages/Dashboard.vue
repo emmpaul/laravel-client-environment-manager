@@ -4,21 +4,21 @@
 
         <template #header>
             <span class="text-2xl flex items-center">
-                Dashboard
+                <h1>{{ $t('dashboard.title') }}</h1>
             </span>
         </template>
 
         <div>
             <span class="text-2xl flex items-center">
-                Clients added this year
+                {{ $t('dashboard.clientsAddedThisYear') }}
             </span>
+
             <LineChart :data="monthlyClients" :categories="['total']" :index="'name'" :rounded-corners="0"/>
         </div>
     </MainLayout>
 </template>
 
 <script>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue"
 import MainLayout from "@/Layouts/MainLayout.vue"
 import {Head} from "@inertiajs/vue3"
 import {LineChart} from '@/Components/ui/chart-line'
@@ -26,7 +26,6 @@ import {LineChart} from '@/Components/ui/chart-line'
 export default {
     name: 'Overview',
     components: {
-        AuthenticatedLayout,
         MainLayout,
         Head,
         LineChart

@@ -19,13 +19,13 @@ const mode = useColorMode()
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
             <DropdownMenuItem @click="mode = 'light'">
-                Light
+                {{ $t('theme.light') }}
             </DropdownMenuItem>
             <DropdownMenuItem @click="mode = 'dark'">
-                Dark
+                {{ $t('theme.dark') }}
             </DropdownMenuItem>
             <DropdownMenuItem @click="mode = 'auto'">
-                System
+                {{ $t('theme.system') }}
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

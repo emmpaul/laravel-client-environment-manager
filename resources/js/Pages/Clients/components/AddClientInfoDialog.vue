@@ -3,7 +3,7 @@
         <Tooltip>
             <TooltipTrigger>
                 <div class="flex justify-center items-center cursor-pointer">
-                    <Dialog ref="dialogRef" :title="`Add informations for ${client.name}`">
+                    <Dialog ref="dialogRef" :title="$t('informations.add', { name: client.name })">
                         <template #trigger>
                             <CirclePlus class="hover:text-primary" />
                         </template>
@@ -16,7 +16,7 @@
                 </div>
             </TooltipTrigger>
             <TooltipContent>
-                <p>Add informations for {{ client.name }}</p>
+                <p>{{ $t('informations.add', { name: client.name }) }}</p>
             </TooltipContent>
         </Tooltip>
     </TooltipProvider>

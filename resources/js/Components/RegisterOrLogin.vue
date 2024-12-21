@@ -2,12 +2,12 @@
     <div class="flex items-center gap-4">
         <PrimaryButton>
             <Link :href="route('login')">
-                Login
+                {{ $t('login') }}
             </Link>
         </PrimaryButton>
         <PrimaryButton variant="outline">
             <Link :href="route('register')">
-                Register
+                {{ $t('register') }}
             </Link>
         </PrimaryButton>
     </div>

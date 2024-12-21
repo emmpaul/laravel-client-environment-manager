@@ -14,7 +14,7 @@
 
         <template #bottom v-if="!$page.props.auth.user">
             <div class="flex justify-center items-center text-2xl">
-                To make modifications to this app, you need to be logged in.
+                {{ $t('clients.mustBeLoggedIn') }}
             </div>
         </template>
 

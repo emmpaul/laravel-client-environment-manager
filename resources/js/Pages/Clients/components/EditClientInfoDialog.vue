@@ -3,7 +3,7 @@
         <Tooltip>
             <TooltipTrigger>
                 <div class="flex justify-center items-center cursor-pointer">
-                    <Dialog ref="dialogRef" title="Edit informations">
+                    <Dialog ref="dialogRef" title="$t('edit.informations')">
                         <template #trigger>
                             <Cog class="hover:text-primary" />
                         </template>
