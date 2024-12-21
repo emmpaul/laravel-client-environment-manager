@@ -1,5 +1,5 @@
 <template>
-    <Card @dblclick="goToClientPage(client.id)">
+    <Card>
         <CardHeader class="flex items-start gap-4 space-y-0">
             <TooltipProvider :delay-duration="300">
                 <Tooltip>
@@ -56,11 +56,33 @@
                     <div>{{ updatedAt }}</div>
                 </div>
             </div>
+            <Accordion type="single" collapsible v-if="client.informations.length">
+                <AccordionItem v-for="information in client.informations" :key="information.id" :value="information.url">
+                    <AccordionTrigger>{{ information.url }}</AccordionTrigger>
+                    <AccordionContent>
+                        <div class="flex flex-col gap-2">
+                            <Card>
+                                <CardHeader class="flex flex-col items-start gap-4 space-y-0">
+                                    <CardTitle>{{ information.environment }}</CardTitle>
+                                    <CardDescription>{{ information.server }}</CardDescription>
+                                    <Button class="w-full">
+                                        <a :href="information.url" target="_blank" class="text-primary-foreground">Visit</a>
+                                    </Button>
+                                </CardHeader>
+                            </Card>
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+            <div v-else>
+                No informations found
+            </div>
         </CardContent>
     </Card>
 </template>
 
 <script>
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/Components/ui/accordion'
 import {timeAgo} from '@/lib/utils.js'
 import { Button } from '@/Components/ui/button/index.js'
 import {
@@ -85,10 +107,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog/index.js'
-import {
-    Separator
-} from "@/Components/ui/separator/index.js";
-import {router} from "@inertiajs/vue3";
+import {router, Link} from "@inertiajs/vue3";
 import AddClientInfoDialog from "@/Pages/Clients/components/AddClientInfoDialog.vue";
 import EditClientDialog from "@/Pages/Clients/components/EditClientDialog.vue";
 import {
@@ -117,14 +136,18 @@ export default {
         AlertDialogHeader,
         AlertDialogTitle,
         AlertDialogTrigger,
-        Separator,
         Tooltip,
         TooltipContent,
         TooltipProvider,
         TooltipTrigger,
         Delete,
         BadgeX,
-        EditClientDialog
+        EditClientDialog,
+        Accordion,
+        AccordionContent,
+        AccordionItem,
+        AccordionTrigger,
+        Link
     },
 
     props: {
@@ -141,9 +164,6 @@ export default {
     },
 
     methods: {
-        goToClientPage(id) {
-            router.get(`/clients/${id}`)
-        },
         deleteClient(id) {
             router.delete(`/clients/${id}`)
         }

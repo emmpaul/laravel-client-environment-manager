@@ -62,10 +62,7 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-
-        $client = Client::findOrFail($id)->load('informations');
-
-        return Inertia('Clients/Show', compact('client'));
+        //
     }
 
     /**

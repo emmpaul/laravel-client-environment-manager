@@ -22,7 +22,6 @@
 
         <!-- Clients Section -->
         <div v-if="!loading && clients.length" class="flex flex-col gap-2">
-            <h2>Clients</h2>
             <Grid :cols="2">
                 <ClientCard v-for="client in clients" :key="client.id" :client="client" />
             </Grid>
@@ -30,22 +29,6 @@
 
         <div v-if="!loading && !clients.length && searchQuery">
             <p>No clients found for "{{ searchQuery }}"</p>
-        </div>
-
-        <!-- Informations Section -->
-        <div v-if="!loading && informations.length" class="flex flex-col gap-2">
-            <h2>Informations</h2>
-            <Grid :cols="2">
-                <ClientInformationsCard
-                    v-for="(information, index) in informations"
-                    :key="index"
-                    :informations="information"
-                />
-            </Grid>
-        </div>
-
-        <div v-if="!loading && !informations.length && searchQuery">
-            <p>No informations found for "{{ searchQuery }}"</p>
         </div>
 
         <!-- No query message -->
@@ -59,7 +42,6 @@
 <script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import ClientCard from "@/Pages/Clients/components/ClientCard.vue";
-import ClientInformationsCard from "@/Pages/Clients/components/ClientInformationsCard.vue";
 import { Head } from "@inertiajs/vue3";
 import Grid from "@/Components/Grid.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -74,7 +56,6 @@ export default {
         Grid,
         AuthenticatedLayout,
         ClientCard,
-        ClientInformationsCard,
         BounceLoader,
         Head
     },
