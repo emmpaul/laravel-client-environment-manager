@@ -36,7 +36,7 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'sail-mysql2:/var/lib/mysql'
+            - 'sail-mysql_dev:/var/lib/mysql'
             - './docker/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
             - sail
@@ -71,7 +71,7 @@ networks:
     sail:
         driver: bridge
 volumes:
-    sail-mysql2:
+    sail-mysql_dev:
         driver: local
     sail-meilisearch:
         driver: local
