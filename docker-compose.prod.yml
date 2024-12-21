@@ -10,7 +10,7 @@ services:
       PHP_POOL_NAME: "laravel-clients_php"
       SSL_MODE: "off"
     networks:
-      - sail
+      - local
     depends_on:
       - mysql
       - meilisearch
@@ -27,10 +27,10 @@ services:
       MYSQL_PASSWORD: '${DB_PASSWORD}'
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
-      - 'sail-mysql3:/var/lib/mysql'
+      - 'data-mysql:/var/lib/mysql'
       - './docker/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
     networks:
-      - sail
+      - local
     healthcheck:
       test:
         - CMD
@@ -39,6 +39,7 @@ services:
         - '-p${DB_PASSWORD}'
       retries: 3
       timeout: 5s
+
   meilisearch:
     image: 'getmeili/meilisearch:latest'
     ports:
@@ -46,9 +47,9 @@ services:
     environment:
       MEILI_NO_ANALYTICS: '${MEILISEARCH_NO_ANALYTICS:-false}'
     volumes:
-      - 'sail-meilisearch:/meili_data'
+      - 'data-meilisearch:/meili_data'
     networks:
-      - sail
+      - local
     healthcheck:
       test:
         - CMD
@@ -58,11 +59,13 @@ services:
         - 'http://127.0.0.1:7700/health'
       retries: 3
       timeout: 5s
+
 networks:
-  sail:
+  local:
     driver: bridge
+
 volumes:
-  sail-mysql3:
+  data-mysql:
     driver: local
-  sail-meilisearch:
+  data-meilisearch:
     driver: local
