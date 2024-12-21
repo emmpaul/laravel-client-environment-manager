@@ -16,10 +16,6 @@ RUN npm run build
 
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# EXPOSE 80
-
-CMD nginx -g "daemon off;" & php-fpm -F
-
-# HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl --silent --fail http://localhost/ || exit 1
+#CMD nginx -g "daemon off;" & php-fpm -F
 
 USER www-data
