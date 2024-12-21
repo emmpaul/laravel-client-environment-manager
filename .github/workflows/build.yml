@@ -1,62 +1,41 @@
-name: Build Laravel Docker Image
+name: Build and Push Docker Image
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
-  build:
-    name: Build Laravel Docker Image
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
       # Checkout the repository
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      # Log in to DockerHub
-      - name: Log in to DockerHub
+      # Log in to Docker Hub or another registry
+      - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Cache Composer dependencies
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
-      # Install Composer
-      - name: Install Composer
-        run: sudo apt-get update && sudo apt-get install composer -y
-
-      # Install dependencies
-      - name: Install Composer dependencies
-        run: composer install --no-dev --optimize-autoloader
-
-      # Adjust vendor directory ownership
-      - name: Adjust vendor permissions
-        run: sudo chown -R $USER:$USER vendor
-
       # Build the Docker image
-      - name: Build Docker image
+      - name: Build Docker Image
         run: |
-          docker compose -f docker-compose.yml build laravel.test
+          docker build -f ../docker/build/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/laravel-clients:${{ github.sha }} .
 
-      # Push the Docker image to DockerHub
-      - name: Push Docker image
+      # Push the Docker image to Docker Hub
+      - name: Push Docker Image
         run: |
-          docker tag dash-clients:latest emmpaul/dash-clients:latest
-          docker push emmpaul/dash-clients:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/laravel-clients:${{ github.sha }}
+
+      # Optionally, tag the image with `latest`
+      - name: Tag and Push Latest
+        run: |
+          docker tag ${{ secrets.DOCKER_USERNAME }}/laravel-clients:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/laravel-clients:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/laravel-clients:latest
