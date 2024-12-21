@@ -4,7 +4,7 @@
 
         <template #header>
             <span class="text-2xl flex items-center gap-4">
-                Search
+                {{ $t('search.title') }}
             </span>
             <TextInput
                 @input="search"
@@ -14,7 +14,7 @@
                 v-model="searchQuery"
                 required
                 autofocus
-                placeholder="Search"
+                :placeholder="$t('search.title')"
                 autocomplete="username"
             />
             <bounce-loader :loading="loading" size="30px" color="#f97316"></bounce-loader>
@@ -28,12 +28,12 @@
         </div>
 
         <div v-if="!loading && !clients.length && searchQuery">
-            <p>No clients found for "{{ searchQuery }}"</p>
+            <p>{{ $t('search.noClientsFound') + searchQuery }}</p>
         </div>
 
         <!-- No query message -->
         <div v-if="!loading && !searchQuery && !clients.length && !informations.length">
-            <p>Start typing to search for clients or informations.</p>
+            <p>{{ $t('search.noQuery') }}</p>
         </div>
     </MainLayout>
 </template>

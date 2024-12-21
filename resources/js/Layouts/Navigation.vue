@@ -6,21 +6,21 @@
                 :active="route().current('dashboard')"
             >
                 <LayoutDashboard/>
-                Dashboard
+                {{ $t('dashboard.title') }}
             </NavLink>
             <NavLink
                 :href="route('clients.index')"
                 :active="route().current('clients.index')"
             >
                 <UsersRound/>
-                Clients
+                {{ $t('clients.title') }}
             </NavLink>
             <NavLink
                 :href="route('search.index')"
                 :active="route().current('search.index')"
             >
                 <Search/>
-                Search
+                {{ $t('search.title') }}
             </NavLink>
         </nav>
     </div>

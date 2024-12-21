@@ -25,7 +25,7 @@
                                     <BadgeX class="hover:text-red-500" />
                                 </TooltipTrigger>
                                 <TooltipContent class="bg-red-500">
-                                    Delete {{ client.name }}
+                                    {{ $t('delete.label', { name: client.name }) }}
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -33,16 +33,18 @@
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>
-                                Are you sure you want to delete {{ client.name }} ?
+                                {{ $t('delete.areYouSure', { name: client.name }) }}
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone.
+                                {{ $t('delete.cannotBeUndone') }}
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>
+                                {{ $t('cancel.label') }}
+                            </AlertDialogCancel>
                             <AlertDialogAction @click="deleteClient(client.id)">
-                                Delete {{ client.name }}
+                                {{ $t('delete.label', { name: client.name }) }}
                             </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
@@ -73,7 +75,7 @@
                                                                 <BadgeX class="hover:text-red-500" />
                                                             </TooltipTrigger>
                                                             <TooltipContent class="bg-red-500">
-                                                                Delete {{ information.url }}
+                                                                {{ $t('delete.label', { name: information.url }) }}
                                                             </TooltipContent>
                                                         </Tooltip>
                                                     </TooltipProvider>
@@ -81,16 +83,18 @@
                                                 <AlertDialogContent>
                                                     <AlertDialogHeader>
                                                         <AlertDialogTitle>
-                                                            Are you sure you want to delete {{ information.url }} ?
+                                                            {{ $t('delete.areYouSure', { name: information.url }) }}
                                                         </AlertDialogTitle>
                                                         <AlertDialogDescription>
-                                                            This action cannot be undone.
+                                                            {{ $t('delete.cannotBeUndone') }}
                                                         </AlertDialogDescription>
                                                     </AlertDialogHeader>
                                                     <AlertDialogFooter>
-                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogCancel>
+                                                            {{ $t('cancel.label') }}
+                                                        </AlertDialogCancel>
                                                         <AlertDialogAction @click="deleteInformation(information.id)">
-                                                            Delete {{ information.url }}
+                                                            {{ $t('delete.label', { name: information.url }) }}
                                                         </AlertDialogAction>
                                                     </AlertDialogFooter>
                                                 </AlertDialogContent>
@@ -99,7 +103,9 @@
                                     </CardTitle>
                                     <CardDescription>{{ information.server }}</CardDescription>
                                     <Button class="w-full" variant="outline">
-                                        <a :href="information.url" target="_blank" class="text-primary-foreground">Visit</a>
+                                        <a :href="information.url" target="_blank" class="text-primary-foreground">
+                                            {{ $t('clients.visit') }}
+                                        </a>
                                     </Button>
                                 </CardHeader>
                             </Card>
@@ -108,7 +114,7 @@
                 </AccordionItem>
             </Accordion>
             <div v-else>
-                No informations found
+                {{ $t('clients.noInformationsFound') }}
             </div>
         </CardContent>
     </Card>
@@ -196,7 +202,7 @@ export default {
 
     computed: {
         updatedAt() {
-            return 'Last updated ' + timeAgo(this.client.updated_at);
+            return this.$t('clients.lastUpdated') + ' ' + timeAgo(this.client.updated_at, this.$i18n);
         },
     },
 

@@ -3,7 +3,7 @@
         <Tooltip>
             <TooltipTrigger>
                 <div class="flex justify-center items-center hover:text-primary">
-                    <Dialog ref="dialogRef" :title="`Edit ${client.name}`">
+                    <Dialog ref="dialogRef" :title="$t('edit.title', { name: client.name })">
                         <template #trigger>
                             <Cog />
                         </template>
@@ -13,7 +13,7 @@
                 </div>
             </TooltipTrigger>
             <TooltipContent>
-                Edit {{ client.name }}
+                {{ $t('edit.title', { name: client.name }) }}
             </TooltipContent>
         </Tooltip>
     </TooltipProvider>
