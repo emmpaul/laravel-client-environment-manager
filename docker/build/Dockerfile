@@ -20,15 +20,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application files
 COPY . .
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
-
 # Install Composer dependencies
 RUN composer install --no-interaction --prefer-dist
 
 # Install npm dependencies and build assets
 RUN npm install && npm run build
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port 9000
 EXPOSE 9000
