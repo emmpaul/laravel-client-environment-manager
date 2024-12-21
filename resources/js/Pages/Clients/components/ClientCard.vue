@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <CardHeader class="flex items-start gap-4 space-y-0">
+        <CardHeader class="flex items-center gap-4 space-y-0">
             <TooltipProvider :delay-duration="300">
                 <Tooltip>
                     <TooltipTrigger>
@@ -9,7 +9,7 @@
                         </CardTitle>
                     </TooltipTrigger>
                     <TooltipContent>
-                        Double click {{ client.name }} card to show informations
+                        {{ updatedAt }}
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
@@ -51,11 +51,6 @@
 <!--            End Actions-->
         </CardHeader>
         <CardContent>
-            <div class="flex justify-between space-x-4 text-sm text-muted-foreground">
-                <div class="flex items-center space-x-4 text-sm">
-                    <div>{{ updatedAt }}</div>
-                </div>
-            </div>
             <Accordion type="single" collapsible v-if="client.informations.length">
                 <AccordionItem v-for="information in client.informations" :key="information.id" :value="information.url">
                     <AccordionTrigger>{{ information.url }}</AccordionTrigger>
@@ -63,9 +58,15 @@
                         <div class="flex flex-col gap-2">
                             <Card>
                                 <CardHeader class="flex flex-col items-start gap-4 space-y-0">
-                                    <CardTitle>{{ information.environment }}</CardTitle>
+                                    <CardTitle class="flex w-full items-center justify-between">
+                                        <Badge class="p-2">
+                                            {{ information.environment }}
+                                        </Badge>
+
+                                        <EditClientInfoDialog :client="client" :information-id="information.id" />
+                                    </CardTitle>
                                     <CardDescription>{{ information.server }}</CardDescription>
-                                    <Button class="w-full">
+                                    <Button class="w-full" variant="outline">
                                         <a :href="information.url" target="_blank" class="text-primary-foreground">Visit</a>
                                     </Button>
                                 </CardHeader>
@@ -116,10 +117,14 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from '@/Components/ui/tooltip/index.js'
+import {Badge} from "@/Components/ui/badge/index.js";
+import EditClientInfoDialog from "@/Pages/Clients/components/EditClientInfoDialog.vue";
 export default {
     name: 'ClientCard',
 
     components: {
+        EditClientInfoDialog,
+        Badge,
         AddClientInfoDialog,
         Button,
         Card,
@@ -159,14 +164,22 @@ export default {
 
     computed: {
         updatedAt() {
-            return 'Updated ' + timeAgo(this.client.updated_at);
+            return 'Last updated ' + timeAgo(this.client.updated_at);
         },
     },
 
     methods: {
         deleteClient(id) {
             router.delete(`/clients/${id}`)
-        }
+        },
+
+        // submit(form) {
+        //     form.patch(route('informations.update'), {
+        //         onSuccess: () => {
+        //             this.$refs.dialogRef.close();
+        //         }
+        //     })
+        // }
     }
 }
 </script>

@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('clients', ClientController::class);
     Route::post('/clients/search', [ClientController::class, 'search'])->name('clients.search');
-    Route::resource('informations', InformationController::class)->only('store', 'destroy');
+    Route::resource('informations', InformationController::class)->only('store', 'destroy', 'update');
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
     Route::post('/search', [SearchController::class, 'search'])->name('search');
     Route::get('/stats', [ClientController::class, 'stats'])->name('stats');

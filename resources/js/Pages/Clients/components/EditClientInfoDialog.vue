@@ -3,27 +3,28 @@
         <Tooltip>
             <TooltipTrigger>
                 <div class="flex justify-center items-center cursor-pointer">
-                    <Dialog ref="dialogRef" :title="`Add informations for ${client.name}`">
+                    <Dialog ref="dialogRef" title="Edit informations">
                         <template #trigger>
-                            <CirclePlus class="hover:text-primary" />
+                            <Cog class="hover:text-primary" />
                         </template>
 
                         <InfoForm
                             :client="client"
+                            :information-id="informationId"
                             @submitted="closeDialog"
                         />
                     </Dialog>
                 </div>
             </TooltipTrigger>
             <TooltipContent>
-                <p>Add informations for {{ client.name }}</p>
+                <p>Edit informations</p>
             </TooltipContent>
         </Tooltip>
     </TooltipProvider>
 </template>
 
 <script>
-import { CirclePlus } from "lucide-vue-next"
+import { Cog } from "lucide-vue-next"
 import Dialog from "@/Components/Dialog.vue"
 import {
     Tooltip,
@@ -34,10 +35,10 @@ import {
 import InfoForm from "@/Pages/Clients/components/InfoForm.vue"
 
 export default {
-    name: 'AddClientInfoDialog',
+    name: 'EditClientInfoDialog',
     components: {
         Dialog,
-        CirclePlus,
+        Cog,
         Tooltip,
         TooltipContent,
         TooltipProvider,
@@ -48,6 +49,10 @@ export default {
     props: {
         client: {
             type: Object,
+            required: true
+        },
+        informationId: {
+            type: Number,
             required: true
         }
     },

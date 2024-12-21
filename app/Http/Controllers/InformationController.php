@@ -77,7 +77,25 @@ class InformationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate(
+            [
+                'client_id' => 'required|integer|exists:clients,id',
+                'url' => 'required|string',
+                'server' => 'required|string',
+                'environment' => 'required|string',
+            ],
+            [
+                'client_id.integer' => 'Client ID must be an integer.',
+                'url.required' => 'The URL field is required.',
+                'url.string' => 'The URL must be a string.',
+                'server.required' => 'The server field is required.',
+                'server.string' => 'The server must be a string.',
+                'environment.required' => 'The environment field is required.',
+                'environment.string' => 'The environment must be a string.',
+            ]
+        );
+
+        Information::findOrFail($id)->update($request->all());
     }
 
     /**
