@@ -20,11 +20,12 @@
                 </div>
             </template>
 
-            <Grid :cols="2">
+            <Grid>
                 <ClientCard v-for="client in localClients" :key="client.id" :client="client"/>
             </Grid>
 
             <Pagination
+                v-if="clients.next_page_url !== null && prev_page_url !== null"
                 :total="clients.total"
                 :default-page="clients.current_page"
                 :items-per-page="clients.per_page"

@@ -1,29 +1,5 @@
 <template>
-    <div :class="classes">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
         <slot />
     </div>
 </template>
-<script>
-export default {
-    name: 'Grid',
-    props: {
-        cols: {
-            type: Number,
-            default: 2
-        },
-        rows: {
-            type: Number,
-            default: 4
-        },
-        gap: {
-            type: Number,
-            default: 2
-        }
-    },
-    computed: {
-        classes() {
-            return `grid grid-cols-${this.cols} grid-rows-${this.rows} gap-${this.gap}`
-        }
-    },
-}
-</script>

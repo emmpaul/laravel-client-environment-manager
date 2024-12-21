@@ -81,7 +81,18 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate(
+            [
+                'name' => 'required|string|unique:clients',
+            ],
+            [
+                'name.required' => 'The name field is required.',
+                'name.string' => 'The name must be a string.',
+                'name.unique' => 'This client name is already taken.',
+            ]
+        );
+
+        Client::findOrFail($id)->update($request->all());
     }
 
     /**

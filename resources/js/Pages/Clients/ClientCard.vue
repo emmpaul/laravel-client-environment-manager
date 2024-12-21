@@ -16,6 +16,7 @@
 <!--            Actions-->
             <div class="flex items-center gap-2">
                 <AddClientInfoDialog :client="client" />
+                <EditClientDialog :client="client" />
                 <AlertDialog>
                     <AlertDialogTrigger class="flex justify-center items-center" as="button">
                         <TooltipProvider :delay-duration="300">
@@ -89,6 +90,7 @@ import {
 } from "@/Components/ui/separator";
 import {router} from "@inertiajs/vue3";
 import AddClientInfoDialog from "@/Components/AddClientInfoDialog.vue";
+import EditClientDialog from "@/Components/EditClientDialog.vue";
 import {
     Tooltip,
     TooltipContent,
@@ -121,7 +123,8 @@ export default {
         TooltipProvider,
         TooltipTrigger,
         Delete,
-        BadgeX
+        BadgeX,
+        EditClientDialog
     },
 
     props: {
