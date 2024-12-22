@@ -18,7 +18,7 @@ class SearchController extends Controller
             $search_result = Client::search($request->keyword)->get();
 
             if ($search_result->isEmpty()) {
-                \Log::info('No results found for keyword: ' . $request->keyword);
+                \Log::info('No results found for keyword: '.$request->keyword);
             } else {
                 \Log::info('Search results found:', $search_result->toArray());
             }
@@ -42,10 +42,11 @@ class SearchController extends Controller
                 }),
             ]);
         } catch (\Exception $e) {
-            $error = 'Search error: ' . $e->getMessage();
+            $error = 'Search error: '.$e->getMessage();
             \Log::error($error);
+
             return response()->json([
-                'error' => $error
+                'error' => $error,
             ], 500);
         }
     }

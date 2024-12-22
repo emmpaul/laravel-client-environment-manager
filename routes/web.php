@@ -4,7 +4,6 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,7 +12,9 @@ Route::get('/', function () {
 });
 
 // Publicly accessible routes
-Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
 Route::resource('clients', ClientController::class)->only(['index', 'show']);
 Route::get('/stats', [ClientController::class, 'stats'])->name('stats');
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
