@@ -16,6 +16,19 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
+      meilisearch:
+        image: getmeili/meilisearch:latest
+        env:
+          MEILI_MASTER_KEY: masterKey
+          MEILI_NO_ANALYTICS: true
+        ports:
+          - 7700:7700
+        options: >-
+          --health-cmd="wget --no-verbose --spider http://localhost:7700/health"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - uses: actions/checkout@v3
 
@@ -58,11 +71,13 @@ jobs:
           DB_DATABASE: laravel_test
           DB_USERNAME: root
           DB_PASSWORD: password
+          MEILISEARCH_HOST: http://127.0.0.1:7700
+          MEILISEARCH_KEY: masterKey
         run: |
           php artisan config:clear
           php artisan migrate
 
-      - name: Execute tests via PHPUnit
+      - name: Execute tests
         env:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
@@ -70,4 +85,6 @@ jobs:
           DB_DATABASE: laravel_test
           DB_USERNAME: root
           DB_PASSWORD: password
+          MEILISEARCH_HOST: http://127.0.0.1:7700
+          MEILISEARCH_KEY: masterKey
         run: php artisan test
