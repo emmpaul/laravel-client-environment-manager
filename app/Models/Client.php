@@ -8,8 +8,8 @@ use Laravel\Scout\Searchable;
 
 class Client extends Model
 {
-
     use Searchable;
+
     protected $fillable = ['name'];
 
     public function informations(): HasMany
