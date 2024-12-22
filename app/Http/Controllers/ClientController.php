@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class ClientController extends Controller
 {
@@ -17,7 +16,7 @@ class ClientController extends Controller
         $query = Client::with('informations');
 
         if ($request->has('keyword') && $request->keyword) {
-            $query->where('name', 'like', '%' . $request->keyword . '%');
+            $query->where('name', 'like', '%'.$request->keyword.'%');
         }
 
         $totalClients = $query->count();
@@ -106,7 +105,7 @@ class ClientController extends Controller
             $search_result = Client::search($request->keyword)->get();
 
             if ($search_result->isEmpty()) {
-                \Log::info('No results found for keyword: ' . $request->keyword);
+                \Log::info('No results found for keyword: '.$request->keyword);
             } else {
                 \Log::info('Search results found:', $search_result->toArray());
             }
@@ -115,9 +114,10 @@ class ClientController extends Controller
                 'result' => $search_result,
             ]);
         } catch (\Exception $e) {
-            \Log::error('Search error: ' . $e->getMessage());
+            \Log::error('Search error: '.$e->getMessage());
+
             return response()->json([
-                'error' => 'Search failed, please try again later.'
+                'error' => 'Search failed, please try again later.',
             ], 500);
         }
     }
@@ -151,7 +151,7 @@ class ClientController extends Controller
                 'name' => Carbon::create()->month($month)->format('M'),
                 'total' => Client::whereMonth('created_at', $month)
                     ->whereYear('created_at', $today->year)
-                    ->count()
+                    ->count(),
             ];
         }
 

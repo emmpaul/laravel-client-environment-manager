@@ -44,8 +44,8 @@ class ClientStoreTest extends TestCase
         $response->assertJsonValidationErrors('name');
         $response->assertJsonFragment([
             'errors' => [
-                'name' => ['The name field is required.']
-            ]
+                'name' => ['The name field is required.'],
+            ],
         ]);
     }
 
@@ -64,8 +64,8 @@ class ClientStoreTest extends TestCase
         $response->assertJsonValidationErrors('name');
         $response->assertJsonFragment([
             'errors' => [
-                'name' => ['This client name is already taken.']
-            ]
+                'name' => ['This client name is already taken.'],
+            ],
         ]);
     }
 
@@ -82,8 +82,8 @@ class ClientStoreTest extends TestCase
         $response->assertJsonValidationErrors('name');
         $response->assertJsonFragment([
             'errors' => [
-                'name' => ['The name must be a string.']
-            ]
+                'name' => ['The name must be a string.'],
+            ],
         ]);
     }
 }

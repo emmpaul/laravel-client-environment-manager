@@ -9,7 +9,7 @@ class Information extends Model
 {
     protected $fillable = ['url', 'server', 'environment', 'client_id'];
 
-    protected $table = "informations";
+    protected $table = 'informations';
 
     public function client(): BelongsTo
     {
