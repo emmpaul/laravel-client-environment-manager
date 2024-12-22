@@ -17,17 +17,19 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
       meilisearch:
-        image: getmeili/meilisearch:latest
+        image: getmeili/meilisearch:v1.5
         env:
           MEILI_MASTER_KEY: masterKey
           MEILI_NO_ANALYTICS: true
+          MEILI_ENV: development
         ports:
           - 7700:7700
         options: >-
-          --health-cmd="wget --no-verbose --spider http://localhost:7700/health"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+          --health-cmd="curl -f http://localhost:7700/health || exit 1"
+          --health-interval=30s
+          --health-timeout=10s
+          --health-retries=3
+          --health-start-period=40s
 
     steps:
       - uses: actions/checkout@v3
@@ -73,11 +75,12 @@ jobs:
           DB_PASSWORD: password
           MEILISEARCH_HOST: http://127.0.0.1:7700
           MEILISEARCH_KEY: masterKey
+          SCOUT_DRIVER: meilisearch
         run: |
           php artisan config:clear
           php artisan migrate
 
-      - name: Execute tests
+      - name: Execute tests via PHPUnit
         env:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
@@ -87,4 +90,5 @@ jobs:
           DB_PASSWORD: password
           MEILISEARCH_HOST: http://127.0.0.1:7700
           MEILISEARCH_KEY: masterKey
+          SCOUT_DRIVER: meilisearch
         run: php artisan test
